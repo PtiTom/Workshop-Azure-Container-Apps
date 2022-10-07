@@ -10,7 +10,7 @@ L'objectif de ce Lab 3 c'est de déployer une application (en micro-services) da
 Le déploiement de l'environnement se fera avec un "Workflow Github" (Pipeline).<br>
 Créez un Service Principal Azure Cli ou Cloud Shell:<br>
 ```
-az ad sp create-for-rbac --name "mySPN" --role "Contributor" --scopes /subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxx --sdk-aut -o jsonc
+az ad sp create-for-rbac --name "mySPN" --role "Contributor" --scopes /subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxx --sdk-auth -o jsonc
 ```
 Copiez les informations dans un "notepad" ou autres<br>
 Gardez cette structure:<br>

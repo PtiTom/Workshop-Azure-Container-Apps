@@ -3,7 +3,22 @@
 ## Objectif:
 L'objectif de ce Lab 6, c'est d'utiliser les "GitHub Actions" pour publier les révisions d'une application de conteneur. Au fur et à mesure que les "commits" sont poussés vers le dépôt GitHub, une "GitHub Actions" est déclenchée et met à jour l'image du conteneur dans "l'Azure Container Registry". Une fois le conteneur mis à jour dans cette dernière, Azure Container Apps crée une nouvelle révision basée sur l'image de conteneur mise à jour.
 
-## Prération de l'environnement
+## Préparation de l'environnement
+Création d'un "service principal"<br>
+```
+az ad sp create-for-rbac --name "mySPN" --role "Contributor" --scopes /subscriptions/xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxx --sdk-aut -o jsonc
+```
+Copiez les informations dans un "notepad" ou autres (on s'en servira pour le Lab 9)<br>
+Gardez cette structure:<br>
+```
+{
+  "clientId": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+  "clientSecret": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+  "subscriptionId": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+  "tenantId": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx"
+}
+```
+
 Affectation des variables:<br>
 ```
 RESOURCE_GROUP="RG-Lab6"
@@ -11,7 +26,7 @@ LOCATION="eastus2"
 ACR_NAME="acrlab6"
 LOG_ANALYTICS_NAME="pierrc-workspace-lab-6"
 CONTAINERAPPS_ENVIRONMENT="environment-lab-6"
-APLLICATION="hello"
+APPLICATION="hello"
 
 
 ```
@@ -50,16 +65,16 @@ az containerapp env create \
 
 ```
 cd ./Lab_6/App
-az acr build -t ${ACR_NAME}.azurecr.io/${APLLICATION}:1.0.0 -r ${ACR_NAME} .
+az acr build -t ${ACR_NAME}.azurecr.io/${APPLICATION}:1.0.0 -r ${ACR_NAME} .
 ```
 
 ## Déploiement de l'application
 ```
 az containerapp create \
-  --name ${APLLICATION} \
+  --name ${APPLICATION} \
   --resource-group ${RESOURCE_GROUP} \
   --environment ${CONTAINERAPPS_ENVIRONMENT} \
-  --image ${ACR_NAME}.azurecr.io/${APLLICATION}:1.0.0 \
+  --image ${ACR_NAME}.azurecr.io/${APPLICATION}:1.0.0 \
   --target-port 3000 \
   --ingress external \
   --registry-server ${ACR_NAME}.azurecr.io \
@@ -76,7 +91,7 @@ Faire un "curl" sur l'URL ex: `curl https://hello.kinddune-d6b77287.eastus2.azur
 Dans la console Azure:<br>
 <img width='800' src='../images/Lab_6/Lab_6_01.png'/><br>
 <img width='800' src='../images/Lab_6/Lab_6_02.png'/><br>
-Nous avons ici notre premiere version<br><br>
+Nous avons ici notre première version<br><br>
 
 **Paramétrage du "Continous deployment"**
 <img width='800' src='../images/Lab_6/Lab_6_03.png'/><br>
@@ -127,7 +142,7 @@ Trois secrets ont été créés:<br>
 <img width='800' src='../images/Lab_6/Lab_6_12.png'/><br>
 Au niveau du Workflows(ci-dessus):<br>
 
-- Le workflow se déclenche sur un push sur la branche "main" dans le path de l'application ou une modification du workflows (ligne 4 à 11)
+- Le workflow se déclenche sur un push sur la branche "main" dans le path de l'application ou une modification du workflows (lignes 4 à 11)
 - Le workflow peut également se déclencher manuellement (ligne 14)
 - Le job "build" s'éxecute sur un "Runner GitHub" sur un OS Ubuntu LTS-20.04.4 (ligne 17-18)
 - Le job "build" utilise l'action 'docker/setup-buildx-action@v1' (https://github.com/docker/setup-buildx-action) (ligne 24-25)
@@ -137,9 +152,9 @@ Au niveau du Workflows(ci-dessus):<br>
 <img width='800' src='../images/Lab_6/Lab_6_13.png'/><br>
 Suite du Workflows(ci-dessus):<br>
 
-- Le job "Deploy" s'éxecute sur un "Runner GitHub" sur un OS Ubuntu LTS-20.04.4 (ligne 44) 
-- Le job "Deploy" s'éxecute une fois que le job "build" se termine sans erreur (ligne 45 )
-- Le job "Deploy" utilise l'action 'azure/login@v1' (https://github.com/Azure/login) (ligne 48-51)
+- Le job "Deploy" s'exécute sur un "Runner GitHub" sur un OS Ubuntu LTS-20.04.4 (ligne 44) 
+- Le job "Deploy" s'exécute une fois que le job "build" se termine sans erreur (ligne 45)
+- Le job "Deploy" utilise l'action 'azure/login@v1' (https://github.com/Azure/login) (lignes 48-51)
 - Le job "Deploy" utilise l'action 'azure/CLI@v1' (https://github.com/marketplace/actions/azure-cli-action) (ligne 54-60)
 
 
@@ -170,8 +185,8 @@ Dans la console Azure (ci-dessous) :<br>
 
 On peut apercevoir trois révisions :
 
-- une révision du premier deploiement (la v1 de l'application)
-- une révision du deploiement lors du paramétrage du "Continous deployment" (la v1 de l'application)
+- une révision du premier déploiement (la v1 de l'application)
+- une révision du déploiement lors du paramétrage du "Continous deployment" (la v1 de l'application)
 - une révision avec le changement de la version de l'application
 
 

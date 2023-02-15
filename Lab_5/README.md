@@ -157,7 +157,7 @@ Lancer une requête sur le Workspace
 ```bash
 az monitor log-analytics query \
 --workspace $LOG_ANALYTICS_WORKSPACE_CLIENT_ID \
---analytics-query "ContainerAppConsoleLogs_CL | where ContainerAppName_s=='$APPLICATION_NAME' | project ContainerAppName_s, Log_s, TimeGenerated | take 5" -o table
+--analytics-query "ContainerAppConsoleLogs_CL | where ContainerAppName_s=='$CONTAINERAPP_NAME' | project ContainerAppName_s, Log_s, TimeGenerated | take 5" -o table
 ```
 
 Note : si c'est la première fois que vous exécutez ce type de commande, le message suivant apparaitra :

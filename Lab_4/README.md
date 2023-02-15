@@ -54,8 +54,8 @@ Une seule révision est disponible avec 2 réplicas et une répartition du trafi
 Pour plus de détails, utiliser le output en jsonc ou yamlc
 
 ```bash
-az containerapp revision list \ 
---name $APPLICATION_NAME \ 
+az containerapp revision list \
+--name $APPLICATION_NAME \
 --resource-group $RESOURCE_GROUP \
 -o jsonc
 ```

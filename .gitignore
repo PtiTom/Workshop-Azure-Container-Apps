@@ -36,3 +36,6 @@ override.tf.json
 
 # Fucking Mac OS
 **/.DS_Store
+
+# Dotenv
+**/.env

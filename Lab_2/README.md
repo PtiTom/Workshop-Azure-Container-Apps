@@ -3,15 +3,20 @@
 tags: #azure #azurecontainerapps #azurecli #cli 
 
 ## Objectif:
-L'objectif de ce Lab 2, c'est de déployer une Container App via Azure CLI 
+L'objectif de ce Lab 2, c'est de construire des images de conteneurs pour une application qui sera déployée une Container App via Azure CLI.
+
+L'application sera disponible en 2 versions (il y aura 2 images de conteneurs distinctes) ce qui permettra de tester les révisions et le trafic splitting dans Azure Container Apps (lors du Lab 4) 
 
 
 ## Pré-requis sur le poste d'administration
 - Un abonnement Azure avec les privilèges d'administration (idéalement owner)
 - Un environnement Shell sous Bash
 - Azure CLI 2.37 or >: [https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest) 
+- Avoir cloné ce repository GitHub
 
-Les opérations sont réalisables depuis l'Azure Cloud Shell (Bash Shell) : https://shell.azure.com 
+Les opérations sont réalisables depuis l'Azure Cloud Shell (Bash Shell) : https://shell.azure.com --> attention à bien cloner ce repo GitHub dans votre cloud Shell
+
+Attention : l'Azure Cloud Shell est un environnement avec certaines limitations: [https://learn.microsoft.com/en-us/azure/cloud-shell/limitations] (https://learn.microsoft.com/en-us/azure/cloud-shell/limitations)
 
 ## Préparation de l'environnement de déploiement des conteneurs
 
@@ -31,7 +36,7 @@ az provider register --namespace Microsoft.App
 az provider show --namespace Microsoft.App
 ```
 
-### Affectation des variables
+### Affectation des variables  (REMPLACER La valeur de LOG_ANALYTICS_NAME par la votre)
 
 ```bash
 RESOURCE_GROUP="RG-Lab2"
@@ -86,8 +91,10 @@ Plus d'informations sur cette commande : https://docs.microsoft.com/en-us/cli/az
 ## Création d'une container app depuis une image exemple dans la Microsoft Container Registry
 
 ```bash
+CONTAINERAPPS_NAME="stan-container-app"
+
 az containerapp create \
-  --name my-container-app \
+  --name $CONTAINERAPPS_NAME \
   --resource-group $RESOURCE_GROUP \
   --environment $CONTAINERAPPS_ENVIRONMENT \
   --image mcr.microsoft.com/azuredocs/containerapps-helloworld:latest \
@@ -105,7 +112,7 @@ Ouvrir un navigateur Web et saisir le FQDN renvoyé par la commande précédente
 
 ### Création d'une Azure Container Registry
 
-Affecter les variables
+Affecter les variables (REMPLACER La valeur de ACR_NAME par la votre)
 
 ```bash
 ACR_NAME="stanacr2022"  

@@ -1,0 +1,62 @@
+#!/bin/bash
+RESOURCE_GROUP="RG_Lab_3"
+LOCATION="eastus2"
+CONTAINERAPPS_ENVIRONMENT="managedEnvironment-Lab-3"
+LOG_ANALYTICS_NAME="workspacelab3"
+ACR_NAME="acr2022lab3"
+DB_HOST_NAME="DB-lab-3-007"                                                                                                                                                     #
+DB_NAME="rugby_api" # ne pas modifier                                                                                                                                           #
+DB_ADMIN="pierrc"                                                                                                                                                               #
+DB_ADMIN_PASSWORD=Password123$
+
+az extension add --name containerapp --upgrade
+az provider register --namespace Microsoft.App
+az provider register --namespace Microsoft.OperationalInsights
+
+az group create \
+  --name $RESOURCE_GROUP \
+  --location $LOCATION -o table
+
+az mysql server create \
+  --location $LOCATION \
+  --resource-group $RESOURCE_GROUP \
+  --name $DB_HOST_NAME \
+  --admin-user $DB_ADMIN \
+  --admin-password $DB_ADMIN_PASSWORD \
+  --sku-name GP_Gen5_2 \
+  --ssl-enforcement Disabled
+
+az monitor log-analytics workspace create \
+ --resource-group $RESOURCE_GROUP \
+ --workspace-name $LOG_ANALYTICS_NAME \
+ --location $LOCATION \
+ -o jsonc
+
+LOG_ANALYTICS_WORKSPACE_CLIENT_ID=`az monitor log-analytics workspace show --query customerId -g $RESOURCE_GROUP -n $LOG_ANALYTICS_NAME --out tsv`
+LOG_ANALYTICS_WORKSPACE_PRIMARY_KEY=`az monitor log-analytics workspace get-shared-keys --query primarySharedKey -g $RESOURCE_GROUP -n $LOG_ANALYTICS_NAME --out tsv`
+
+az containerapp env create \
+  --name $CONTAINERAPPS_ENVIRONMENT \
+  --resource-group $RESOURCE_GROUP \
+  --location $LOCATION \
+  --logs-workspace-id $LOG_ANALYTICS_WORKSPACE_CLIENT_ID \
+  --logs-workspace-key $LOG_ANALYTICS_WORKSPACE_PRIMARY_KEY \
+  -o jsonc
+
+az acr create \
+  --name $ACR_NAME \
+  --resource-group $RESOURCE_GROUP \
+  --admin-enabled true \
+  --sku basic
+
+az mysql server firewall-rule create \
+  --resource-group $RESOURCE_GROUP \
+  --server-name $DB_HOST_NAME \
+  --start-ip-address 0.0.0.0 \
+  --end-ip-address 255.255.255.255 \
+  --name allowip
+
+az mysql db create \
+  --name $DB_NAME \
+  --resource-group $RESOURCE_GROUP \
+  --server-name $DB_HOST_NAME

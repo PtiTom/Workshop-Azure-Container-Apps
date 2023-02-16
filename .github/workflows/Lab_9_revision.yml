@@ -4,8 +4,8 @@ on:
   workflow_dispatch:
 
 env:
-  RESOURCE_GROUP: RG_Lab_9
-  ACR_NAME: acrlab9
+  RESOURCE_GROUP: RG_Lab_9_Tme
+  ACR_NAME: acrlab9tme
   APPLICATION: hello-aca
   REV_APPLICATION: rev-02
   VERSION_2_APPLICATION: 2.0.0

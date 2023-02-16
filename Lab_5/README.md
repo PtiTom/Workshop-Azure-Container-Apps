@@ -121,7 +121,7 @@ az containerapp logs show \
 
 Pour afficher un stream en direct, utilisez l’argument `--follow` . Sélectionnez Ctrl-C pour arrêter le stream en direct.
 
-Afficher les 30 dernières lignes et le stream en direct :
+Afficher les 15 dernières lignes et le stream en direct :
 ```bash
 az containerapp logs show \
   --name $CONTAINERAPP_NAME \
@@ -140,7 +140,7 @@ Dans le resource group "RG-Lab5", aller dans le Log Analytics Worskspace de ce l
 Créer une nouvelle requête (qui récupère les 10 derniers logs de la Container App appelé nginx) en copiant/collant la requête Kusto suivante. Changer le time range en choisissant la dernière heure et l'exécuter avec le __bouton Run__
 
 ```bash
-ContainerAppConsoleLogs_CL | where ContainerAppName_s == 'nginx' | project ContainerAppName_s, Log_s, TimeGenerated | take 10
+ContainerAppConsoleLogs_CL | where ContainerAppName_s == 'nginx' | project ContainerAppName_s, Log_s, TimeGenerated |order by TimeGenerated| take 5
 ```
 
 Dans le panneau Results  (en bas à droite), cliquer sur > pour avoir plus de détails.

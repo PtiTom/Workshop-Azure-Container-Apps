@@ -19,6 +19,7 @@ Workshop 2 journées sur Azure Container Apps
 -   [Lab 8](/Lab_8/README.md) : Utilisation de stockage persistant 
 -   [Lab 9](/Lab_9/README.md) : Pipeline _revisions_
 -   [Lab 10](/Lab_10/README.md) : Environnement privé
+-   [Lab 11](/Lab_11/README.md) : Déploiement via Terraform
 -   Synthèse et tour de table
 
 
@@ -28,3 +29,14 @@ Workshop 2 journées sur Azure Container Apps
 [Mindmap Azure Container App](https://stanmindmaps01.z6.web.core.windows.net/azure_container_apps.html)
 
 [Vidéo de la mindmap](https://youtu.be/MlnnciWNWh0)
+
+
+## Lectures additionnelles
+
+Under the surface of Azure Container Apps
+https://www.linkedin.com/pulse/under-surface-azure-container-apps-christophe-parisel/?trackingId=bymzKh%2BHSkywmjsKVbizJw%3D%3D
+
+## Autres Labs
+
+Lab avec application Java
+https://quarkus.io/quarkus-workshops/super-heroes/index-azure.html

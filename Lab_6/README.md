@@ -110,9 +110,9 @@ Registry setting:
 - Sélectionnez "Azure Container Registry"
 - Allez chercher l' "Azure Container Registry" qui a été déployée lors de la préparation de l'environnement
 - Sélectionnez l'image qui été construite lors de la préparation de l'environnement
-- Mettre le chemin du Dockerfile de l'application
+- Mettre le chemin du Dockerfile de l'application :  __./Lab_6/App__
 
-Service principal setting:
+Service Principal settings: 
 
 - ID du SPN (créé lors du Lab 3)
 - le secret du SPN

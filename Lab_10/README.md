@@ -226,7 +226,7 @@ az vm create \
     --admin-password $PASSWORD_USER
 ```
 Récupérer la "publicIpAddress" <br>
-Connectez vous à la VM de test (mdp:Password123!):<br>
+Connectez vous à la VM de test (mdp:Password123$):<br>
 ```
 ssh azureuser@<PUBLICIP>
 ```

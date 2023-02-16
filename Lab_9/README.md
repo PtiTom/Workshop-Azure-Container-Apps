@@ -135,7 +135,7 @@ Déploiement d'une nouvelle révision (V2)
 Allez dans le Workflow `./github/workflows/Lab9_revision.yml`<br>
 Modifiez le workflows avec votre environnement<br>
 Déclenchez le Workflows manuellement<br>
-Pour déclancher le workflow:<br>
+Pour déclencher le workflow:<br>
 <img width='800' src='../images/Lab_3/Lab_3_03bis.png'/><br>
 <img width='800' src='../images/Lab_3/Lab_3_03.png'/><br>
 Pour suivre l'exécution du workflows:<br>
@@ -181,7 +181,7 @@ URL=`(az containerapp show \
   --query properties.configuration.ingress.fqdn -o tsv)`
 curl https://$URL
 ```
-Checkez la modification
+Vérifier la modification
 ```
 Welcome to Azure Container Apps! (v2)
 ```
